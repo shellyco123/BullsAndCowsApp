@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BullsAndCowsApp.Views.MainPage"
+             BackgroundColor="#F0F9FF">
+
+    <!-- Rows: title, attempt, guess box, button, error, result, history title, history list, new game -->
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,*,Auto"
+          RowSpacing="12">
+
+        <!-- Title -->
+        <Label Grid.Row="0"
+               Text="Bulls &amp; Cows"
+               BackgroundColor="#BAE6FD"
+               TextColor="#0C4A6E"
+               FontSize="26"
+               FontFamily="OpenSansSemibold"
+               HorizontalTextAlignment="Center"
+               Padding="0,16" />
+
+        <!-- Attempt number -->
+        <Label Grid.Row="1"
+               Text="{Binding AttemptCount, StringFormat='Attempt: {0}'}"
+               TextColor="#0369A1"
+               FontFamily="OpenSansRegular"
+               FontSize="16"
+               Margin="24,0" />
+
+        <!-- Box for typing the guess -->
+        <Border Grid.Row="2"
+                Stroke="#7DD3FC"
+                StrokeThickness="1"
+                BackgroundColor="White"
+                Margin="24,0"
+                Padding="8,0">
+            <Entry Text="{Binding GuessText}"
+                   Placeholder="Enter 4 digits..."
+                   PlaceholderColor="#64748B"
+                   TextColor="#0C4A6E"
+                   FontFamily="OpenSansRegular"
+                   FontSize="20"
+                   Keyboard="Numeric" />
+        </Border>
+
+        <!-- Submit guess button -->
+        <Button Grid.Row="3"
+                Text="GUESS"
+                Command="{Binding SubmitGuessCommand}"
+                BackgroundColor="#38BDF8"
+                TextColor="#0C4A6E"
+                FontSize="18"
+                FontFamily="OpenSansSemibold"
+                CornerRadius="0"
+                WidthRequest="220"
+                HorizontalOptions="Center" />
+
+        <!-- Error message: shown only when there is an error -->
+        <Label Grid.Row="4"
+               Text="{Binding ErrorMessage}"
+               IsVisible="{Binding HasError}"
+               BackgroundColor="#FEE2E2"
+               TextColor="#B91C1C"
+               FontFamily="OpenSansRegular"
+               FontSize="15"
+               HorizontalTextAlignment="Center"
+               Padding="8"
+               Margin="24,0" />
+
+        <!-- Result of the last guess -->
+        <Label Grid.Row="5"
+               Text="{Binding StatusMessage}"
+               TextColor="#0C4A6E"
+               FontSize="20"
+               FontFamily="OpenSansSemibold"
+               HorizontalTextAlignment="Center"
+               Margin="24,0" />
+
+        <!-- History titles -->
+        <Grid Grid.Row="6"
+              ColumnDefinitions="*,2*,*,*"
+              Margin="24,0">
+            <Label Grid.Column="0" Text="#" TextColor="#0369A1" FontFamily="OpenSansSemibold" />
+            <Label Grid.Column="1" Text="Guess" TextColor="#0369A1" FontFamily="OpenSansSemibold" />
+            <Label Grid.Column="2" Text="Bulls" TextColor="#0369A1" FontFamily="OpenSansSemibold" />
+            <Label Grid.Column="3" Text="Cows" TextColor="#0369A1" FontFamily="OpenSansSemibold" />
+        </Grid>
+
+        <!-- History list: one row for each guess -->
+        <CollectionView Grid.Row="7"
+                        ItemsSource="{Binding History}"
+                        Margin="24,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid ColumnDefinitions="*,2*,*,*"
+                          Padding="0,4">
+                        <Label Grid.Column="0" Text="{Binding AttemptNumber}" TextColor="#334155" FontFamily="OpenSansRegular" />
+                        <Label Grid.Column="1" Text="{Binding Guess}" TextColor="#334155" FontFamily="OpenSansRegular" />
+                        <Label Grid.Column="2" Text="{Binding Bulls}" TextColor="#334155" FontFamily="OpenSansRegular" />
+                        <Label Grid.Column="3" Text="{Binding Cows}" TextColor="#334155" FontFamily="OpenSansRegular" />
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <!-- New game button -->
+        <Button Grid.Row="8"
+                Text="New game"
+                Command="{Binding NewGameCommand}"
+                BackgroundColor="White"
+                BorderColor="#38BDF8"
+                BorderWidth="1"
+                TextColor="#0369A1"
+                FontSize="28"
+                FontFamily="OpenSansSemibold"
+                CornerRadius="0"
+                WidthRequest="260"
+                HorizontalOptions="Center"
+                Margin="0,0,0,24" />
+    </Grid>
+</ContentPage>
