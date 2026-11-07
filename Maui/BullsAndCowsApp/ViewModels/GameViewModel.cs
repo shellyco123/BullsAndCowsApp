@@ -15,11 +15,13 @@ namespace BullsAndCowsApp.ViewModels
         private ObservableCollection<GuessRecord> _history;
         private ICommand _submitGuessCommand;
         private ICommand _newGameCommand;
+        private ICommand _showRandomNumberCommand;
 
         private string _guessText = "";
         private int _attemptCount;
         private string _errorMessage = "";
         private string _statusMessage = "";
+        private string _randomNumberText = "";
 
         public GameViewModel()
         {
@@ -27,6 +29,7 @@ namespace BullsAndCowsApp.ViewModels
             _history = new ObservableCollection<GuessRecord>();
             _submitGuessCommand = new GuessButtonCommand(this);
             _newGameCommand = new NewGameButtonCommand(this);
+            _showRandomNumberCommand = new RandomNumberButtonCommand(this);
             _statusMessage = "I picked a 4-digit number with no repeated digits.";
         }
 
@@ -81,6 +84,17 @@ namespace BullsAndCowsApp.ViewModels
             }
         }
 
+        // The random number shown on the screen
+        public string RandomNumberText
+        {
+            get { return _randomNumberText; }
+            set
+            {
+                _randomNumberText = value;
+                OnPropertyChanged("RandomNumberText");
+            }
+        }
+
         // The rows of the history list. The list updates the screen by itself
         public ObservableCollection<GuessRecord> History
         {
@@ -97,6 +111,12 @@ namespace BullsAndCowsApp.ViewModels
         public ICommand NewGameCommand
         {
             get { return _newGameCommand; }
+        }
+
+        // Runs when Random number is tapped
+        public ICommand ShowRandomNumberCommand
+        {
+            get { return _showRandomNumberCommand; }
         }
 
         // Checks the guess, sends it to the game and updates the screen
@@ -150,6 +170,13 @@ namespace BullsAndCowsApp.ViewModels
             GuessText = "";
             AttemptCount = _game.AttemptCount;
             StatusMessage = "New game started! I picked a new number.";
+        }
+
+        // Asks the Model for a new random number and shows it
+        public void ShowRandomNumber()
+        {
+            _game.GenerateRandomNumber();
+            RandomNumberText = _game.RandomNumber.ToString();
         }
 
         // Tells the screen that a property has a new value
@@ -207,6 +234,30 @@ namespace BullsAndCowsApp.ViewModels
         public void Execute(object? parameter)
         {
             _viewModel.StartNewGame();
+        }
+    }
+
+    // The command of the Random number button
+    public class RandomNumberButtonCommand : ICommand
+    {
+        public event EventHandler? CanExecuteChanged;
+
+        private GameViewModel _viewModel;
+
+        public RandomNumberButtonCommand(GameViewModel viewModel)
+        {
+            _viewModel = viewModel;
+        }
+
+        // The button is always enabled
+        public bool CanExecute(object? parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object? parameter)
+        {
+            _viewModel.ShowRandomNumber();
         }
     }
 }

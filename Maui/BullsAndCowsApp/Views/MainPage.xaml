@@ -4,8 +4,8 @@
              x:Class="BullsAndCowsApp.Views.MainPage"
              BackgroundColor="#F0F9FF">
 
-    <!-- Rows: title, attempt, guess box, button, error, result, history title, history list, new game -->
-    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,*,Auto"
+    <!-- Rows: title, attempt, guess box, button, error, result, history title, history list, new game, random number -->
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,*,Auto,Auto"
           RowSpacing="12">
 
         <!-- Title -->
@@ -114,7 +114,32 @@
                 FontFamily="OpenSansSemibold"
                 CornerRadius="0"
                 WidthRequest="260"
-                HorizontalOptions="Center"
-                Margin="0,0,0,24" />
+                HorizontalOptions="Center" />
+
+        <!-- Random number: a button and a box that shows the number -->
+        <Grid Grid.Row="9"
+              ColumnDefinitions="*,*"
+              ColumnSpacing="12"
+              Margin="24,0,24,24">
+            <Button Grid.Column="0"
+                    Text="Random number"
+                    Command="{Binding ShowRandomNumberCommand}"
+                    BackgroundColor="#38BDF8"
+                    TextColor="#0C4A6E"
+                    FontSize="16"
+                    FontFamily="OpenSansSemibold"
+                    CornerRadius="0" />
+            <Border Grid.Column="1"
+                    Stroke="#7DD3FC"
+                    StrokeThickness="1"
+                    BackgroundColor="White">
+                <Label Text="{Binding RandomNumberText}"
+                       TextColor="#0C4A6E"
+                       FontSize="20"
+                       FontFamily="OpenSansSemibold"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center" />
+            </Border>
+        </Grid>
     </Grid>
 </ContentPage>

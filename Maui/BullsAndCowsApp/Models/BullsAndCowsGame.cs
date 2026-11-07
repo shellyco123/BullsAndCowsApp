@@ -12,6 +12,8 @@
 
         private bool _isGameOver;
 
+        private int _randomNumber;
+
         public int AttemptCount
         {
             get { return _attemptCount; }
@@ -24,6 +26,12 @@
             private set { _isGameOver = value; }
         }
 
+        public int RandomNumber
+        {
+            get { return _randomNumber; }
+            private set { _randomNumber = value; }
+        }
+
         public BullsAndCowsGame()
         {
             StartNewGame();
@@ -34,6 +42,11 @@
             _secretNumber = GenerateSecretNumber();
             AttemptCount = 0;
             IsGameOver = false;
+        }
+
+        public void GenerateRandomNumber()
+        {
+            RandomNumber = _random.Next(1000, 10000);
         }
 
         private string GenerateSecretNumber()
