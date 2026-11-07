@@ -1,4 +1,3 @@
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 using BullsAndCowsApp.Models;
@@ -12,7 +11,6 @@ namespace BullsAndCowsApp.ViewModels
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private BullsAndCowsGame _game;
-        private ObservableCollection<GuessRecord> _history;
         private ICommand _submitGuessCommand;
         private ICommand _newGameCommand;
         private ICommand _showRandomNumberCommand;
@@ -26,7 +24,6 @@ namespace BullsAndCowsApp.ViewModels
         public GameViewModel()
         {
             _game = new BullsAndCowsGame();
-            _history = new ObservableCollection<GuessRecord>();
             _submitGuessCommand = new GuessButtonCommand(this);
             _newGameCommand = new NewGameButtonCommand(this);
             _showRandomNumberCommand = new RandomNumberButtonCommand(this);
@@ -95,12 +92,6 @@ namespace BullsAndCowsApp.ViewModels
             }
         }
 
-        // The rows of the history list. The list updates the screen by itself
-        public ObservableCollection<GuessRecord> History
-        {
-            get { return _history; }
-        }
-
         // Runs when GUESS is tapped
         public ICommand SubmitGuessCommand
         {
@@ -139,13 +130,6 @@ namespace BullsAndCowsApp.ViewModels
 
             GuessResult result = _game.SubmitGuess(input);
 
-            GuessRecord record = new GuessRecord();
-            record.AttemptNumber = _game.AttemptCount;
-            record.Guess = input;
-            record.Bulls = result.Bulls;
-            record.Cows = result.Cows;
-            History.Add(record);
-
             ErrorMessage = "";
             GuessText = "";
             AttemptCount = _game.AttemptCount;
@@ -156,7 +140,7 @@ namespace BullsAndCowsApp.ViewModels
             }
             else
             {
-                StatusMessage = "Result: " + record.Feedback;
+                StatusMessage = "Result: " + result.Bulls + " Bulls, " + result.Cows + " Cows";
             }
         }
 
@@ -164,7 +148,6 @@ namespace BullsAndCowsApp.ViewModels
         public void StartNewGame()
         {
             _game.StartNewGame();
-            History.Clear();
 
             ErrorMessage = "";
             GuessText = "";

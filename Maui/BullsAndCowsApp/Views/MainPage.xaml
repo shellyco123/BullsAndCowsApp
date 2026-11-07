@@ -4,8 +4,8 @@
              x:Class="BullsAndCowsApp.Views.MainPage"
              BackgroundColor="#F0F9FF">
 
-    <!-- Rows: title, attempt, guess box, button, error, result, history title, history list, new game, random number -->
-    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,*,Auto,Auto"
+    <!-- Rows: title, attempt, guess box, button, error, result, empty space, new game, random number -->
+    <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,*,Auto,Auto"
           RowSpacing="12">
 
         <!-- Title -->
@@ -75,35 +75,8 @@
                HorizontalTextAlignment="Center"
                Margin="24,0" />
 
-        <!-- History titles -->
-        <Grid Grid.Row="6"
-              ColumnDefinitions="*,2*,*,*"
-              Margin="24,0">
-            <Label Grid.Column="0" Text="#" TextColor="#0369A1" FontFamily="OpenSansSemibold" />
-            <Label Grid.Column="1" Text="Guess" TextColor="#0369A1" FontFamily="OpenSansSemibold" />
-            <Label Grid.Column="2" Text="Bulls" TextColor="#0369A1" FontFamily="OpenSansSemibold" />
-            <Label Grid.Column="3" Text="Cows" TextColor="#0369A1" FontFamily="OpenSansSemibold" />
-        </Grid>
-
-        <!-- History list: one row for each guess -->
-        <CollectionView Grid.Row="7"
-                        ItemsSource="{Binding History}"
-                        Margin="24,0">
-            <CollectionView.ItemTemplate>
-                <DataTemplate>
-                    <Grid ColumnDefinitions="*,2*,*,*"
-                          Padding="0,4">
-                        <Label Grid.Column="0" Text="{Binding AttemptNumber}" TextColor="#334155" FontFamily="OpenSansRegular" />
-                        <Label Grid.Column="1" Text="{Binding Guess}" TextColor="#334155" FontFamily="OpenSansRegular" />
-                        <Label Grid.Column="2" Text="{Binding Bulls}" TextColor="#334155" FontFamily="OpenSansRegular" />
-                        <Label Grid.Column="3" Text="{Binding Cows}" TextColor="#334155" FontFamily="OpenSansRegular" />
-                    </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-
         <!-- New game button -->
-        <Button Grid.Row="8"
+        <Button Grid.Row="7"
                 Text="New game"
                 Command="{Binding NewGameCommand}"
                 BackgroundColor="White"
@@ -117,7 +90,7 @@
                 HorizontalOptions="Center" />
 
         <!-- Random number: a button and a box that shows the number -->
-        <Grid Grid.Row="9"
+        <Grid Grid.Row="8"
               ColumnDefinitions="*,*"
               ColumnSpacing="12"
               Margin="24,0,24,24">
